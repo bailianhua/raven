@@ -1,23 +1,42 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+import DragonRaja from "../views/DragonRaja.vue";
+import DragonRajaGuide from "../views/DragonRajaGuide.vue";
+import Member from "../views/Member.vue";
+import Community from "../views/Community.vue";
 
 Vue.use(VueRouter);
-
 const routes = [
   {
     path: "/",
     name: "home",
-    component: Home
+    component: () => import(/* webpackChunkName: "about" */ "../views/Home.vue")
   },
   {
     path: "/about",
     name: "about",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/About.vue")
+  },
+  {
+    path: "/dragonraja",
+    name: "dragonraja",
+    component: DragonRaja
+  },
+  {
+    path: "/member",
+    name: "member",
+    component: Member
+  },
+  {
+    path: "/dragonraja-guide",
+    name: "dragonraja-guide",
+    component: DragonRajaGuide
+  },
+  {
+    path: "/community",
+    name: "community",
+    component: Community
   }
 ];
 
