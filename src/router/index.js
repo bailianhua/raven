@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import DragonRaja from "../views/DragonRaja.vue";
 import DragonRajaGuide from "../views/DragonRajaGuide.vue";
+import DragonRajaClassGuide from "../views/DragonRajaClassGuide.vue";
 import Member from "../views/Member.vue";
 import Community from "../views/Community.vue";
 
@@ -32,6 +33,11 @@ const routes = [
     path: "/dragonraja-guide",
     name: "dragonraja-guide",
     component: DragonRajaGuide
+  },
+  {
+    path: "/dragonraja-class-guide",
+    name: "dragonraja-class-guide",
+    component: DragonRajaClassGuide
   },
   {
     path: "/community",

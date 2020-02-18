@@ -75,16 +75,6 @@ export default {
           title: "Dragon Raja",
           pic: "img/icons/dragonraja-icon.jfif",
           link: "dragonraja"
-        },
-        {
-          title: "Game 2",
-          pic: "https://www.thiswaifudoesnotexist.net/example-75550.jpg",
-          link: ""
-        },
-        {
-          title: "ComGame",
-          pic: "https://www.thiswaifudoesnotexist.net/example-14255.jpg",
-          link: ""
         }
       ],
       guides: [
@@ -92,16 +82,6 @@ export default {
           title: "Dragon Raja Guide",
           pic: "img/icons/dragonraja-guide-icon.jpg",
           link: "dragonraja-guide"
-        },
-        {
-          title: "Game 2",
-          pic: "https://www.thiswaifudoesnotexist.net/example-75550.jpg",
-          link: ""
-        },
-        {
-          title: "ComGame",
-          pic: "https://www.thiswaifudoesnotexist.net/example-14255.jpg",
-          link: ""
         }
       ],
       right: null

@@ -1,144 +1,211 @@
 <template>
-  <div class="member">
-    <v-app-bar dense flat dark>
-      Our Member
-      <v-spacer></v-spacer>
-      <v-btn dark color="primary" @click="dialog = true">
-        <v-icon left dark>mdi-plus-circle</v-icon>
-        Register your name here !
-      </v-btn>
-    </v-app-bar>
-    <v-container grid-list-xs>
-      <v-dialog v-model="dialog" max-width="290">
-        <v-card>
-          <v-card-title>
-            <span class="headline">User Profile</span>
-          </v-card-title>
-          <v-card-text>
-            <v-container>
-              <form id="newMemberform" v-on:submit.prevent="addUser">
-                <v-row>
-                  <v-col cols="12">
-                    <v-text-field
-                      label="Name"
-                      v-model="newMember.name"
-                      required
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-text-field
-                      label="IGN"
-                      v-model="newMember.ign"
-                      required
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-text-field
-                      label="Picture-URL"
-                      v-model="newMember.picture"
-                      required
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-              </form>
-            </v-container>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" text @click="dialog = false"
-              >Close</v-btn
-            >
-            <v-btn color="blue darken-1" text @click="addUser()">Save</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-      <v-layout row wrap>
-        <v-flex xs12 sm6 md4 lg3 v-for="person in members" :key="person.name">
-          <v-card flat class="mr-4">
-            <v-responsive class="pt-4 text-center">
-              <v-avatar size="76">
-                <img :src="person.picture" />
-              </v-avatar>
-            </v-responsive>
-            <v-card-text>
-              <v-list>
-                <v-list-item>
-                  <v-list-item-title>
-                    {{ person.name }}
-                    <v-list-item-subtitle
-                      >IGN: {{ person.ign }}</v-list-item-subtitle
-                    >
-                  </v-list-item-title>
+  <div class="party">
+    <v-container fluid>
+      <v-row dense>
+        <v-col v-for="(party, i) in parties" :key="i">
+          <v-card class="mx-auto" max-width="300">
+            <v-subheader>{{ party.party_name }}</v-subheader>
+            <v-list dense>
+              <draggable
+                :list="party.party_members"
+                group="member"
+                :component-data="partyListData()"
+              >
+                <v-list-item
+                  v-for="(member, i) in party.party_members"
+                  :key="i"
+                  link
+                >
+                  <v-list-item-icon>
+                    <v-icon>mdi-account</v-icon>
+                  </v-list-item-icon>
+                  <v-list-item-title v-text="member.name"></v-list-item-title>
                 </v-list-item>
-
-                <v-list-group value="true">
-                  <template v-slot:activator>
-                    <v-list-item-title>Games</v-list-item-title>
-                  </template>
-                  <v-list-item
-                    v-for="game in person.games"
-                    :key="game.title"
-                    link
-                  >
-                    <v-list-item-avatar>
-                      <img :src="game.image" alt />
-                    </v-list-item-avatar>
-                    <v-list-item-title v-text="game.title" />
-                  </v-list-item>
-                </v-list-group>
-              </v-list>
-            </v-card-text>
+              </draggable>
+            </v-list>
           </v-card>
-        </v-flex>
-      </v-layout>
+        </v-col>
+      </v-row>
     </v-container>
-    <div class="text-center">
-      <v-bottom-sheet v-model="registered" persistent>
-        <v-sheet class="text-center" height="200px">
-          <v-btn class="mt-6" color="success" @click="registered = !registered"
-            >Got it !</v-btn
-          >
-          <div class="py-3">
-            Register completed. Please Wait for member review.
-          </div>
-        </v-sheet>
-      </v-bottom-sheet>
-    </div>
   </div>
 </template>
 
 <script>
-import { db } from "../db";
+import draggable from "vuedraggable";
 
 export default {
-  data() {
-    return {
-      registered: false,
-      dialog: false,
-      newMember: {
-        name: "",
-        ign: "",
-        active: false,
-        picture: ""
+  components: {
+    draggable
+  },
+  name: "Party",
+  data: () => ({
+    parties: [
+      {
+        party_name: "Evil team",
+        party_type: "mollit",
+        party_members: [
+          {
+            name: " Kumi",
+            ign: "Kumi"
+          },
+          {
+            name: " Kumi",
+            ign: "Kumi"
+          },
+          {
+            name: " Kumi",
+            ign: "Kumi"
+          },
+          {
+            name: " Kumi",
+            ign: "Kumi"
+          },
+          {
+            name: " Kumi",
+            ign: "Kumi"
+          }
+        ]
       },
-      members: []
-    };
-  },
-  firestore() {
-    return {
-      members: db.collection("members").where("active", "==", true)
-    };
-  },
+      {
+        party_name: "Equally Evil team",
+        party_type: "est",
+        party_members: [
+          {
+            name: "Shana",
+            ign: "Shana"
+          },
+          {
+            name: "Shana",
+            ign: "Shana"
+          },
+          {
+            name: "Shana",
+            ign: "Shana"
+          },
+          {
+            name: "Shana",
+            ign: "Shana"
+          },
+          {
+            name: "Shana",
+            ign: "Shana"
+          }
+        ]
+      },
+      {
+        party_name: "MICROLUXE",
+        party_type: "aute",
+        party_members: [
+          {
+            name: "Estela",
+            ign: "Terry"
+          },
+          {
+            name: "Josie",
+            ign: "Howe"
+          },
+          {
+            name: "Teresa",
+            ign: "Wynn"
+          },
+          {
+            name: "Freida",
+            ign: "Norton"
+          },
+          {
+            name: "Corina",
+            ign: "Weeks"
+          }
+        ]
+      },
+      {
+        party_name: "GROK",
+        party_type: "aute",
+        party_members: [
+          {
+            name: "Hines",
+            ign: "Hale"
+          },
+          {
+            name: "Stout",
+            ign: "Rios"
+          },
+          {
+            name: "Janine",
+            ign: "Simon"
+          },
+          {
+            name: "Greer",
+            ign: "Tate"
+          },
+          {
+            name: "Osborne",
+            ign: "Lloyd"
+          }
+        ]
+      },
+      {
+        party_name: "MANGELICA",
+        party_type: "nulla",
+        party_members: [
+          {
+            name: "Stone",
+            ign: "Battle"
+          },
+          {
+            name: "Madelyn",
+            ign: "Dixon"
+          },
+          {
+            name: "Chrystal",
+            ign: "Price"
+          },
+          {
+            name: "Cardenas",
+            ign: "Farrell"
+          },
+          {
+            name: "Carey",
+            ign: "Horn"
+          }
+        ]
+      },
+      {
+        party_name: "GOLOGY",
+        party_type: "voluptate",
+        party_members: [
+          {
+            name: "Ginger",
+            ign: "Yates"
+          },
+          {
+            name: "Marquez",
+            ign: "Mack"
+          },
+          {
+            name: "Mcmahon",
+            ign: "Yang"
+          },
+          {
+            name: "Camille",
+            ign: "Ball"
+          },
+          {
+            name: "Dorothy",
+            ign: "Dennis"
+          }
+        ]
+      }
+    ]
+  }),
   methods: {
-    addUser() {
-      db.collection("members").add(this.newMember);
-      this.newMember.name = "";
-      this.newMember.ign = "";
-      this.newMember.picture = "";
-      this.dialog = false;
-      this.registered = true;
+    partyListData() {
+      return {
+        props: {
+          dense: true
+        }
+      };
     }
-  },
-  mounted() {}
+  }
 };
 </script>

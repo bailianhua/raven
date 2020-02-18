@@ -10,7 +10,7 @@
     </v-app-bar>
     <v-container grid-list-xs>
       <v-row>
-        <v-col v-for="guide in guides" :key="guide.id">
+        <v-col cols="6" md="4" v-for="guide in guides" :key="guide.id">
           <v-card class="mx-auto">
             <v-list-item>
               <v-list-item-avatar color="grey">
@@ -21,7 +21,7 @@
                   class="headline"
                   v-text="guide.title"
                 ></v-list-item-title>
-                <v-list-item-subtitle>by Kurt Wagner</v-list-item-subtitle>
+                <v-list-item-subtitle>by BaiLianhua</v-list-item-subtitle>
                 <div>
                   <v-chip
                     small
@@ -32,18 +32,18 @@
                 </div>
               </v-list-item-content>
             </v-list-item>
-
-            <v-img
-              src="https://cdn.vuetifyjs.com/images/cards/mountain.jpg"
-              height="194"
-            ></v-img>
+            <v-responsive>
+              <v-img :src="guide.bg" height="300"></v-img
+            ></v-responsive>
             <v-card-text
               style="white-space: pre-line;"
               v-text="guide.intro"
             ></v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn text color="deep-purple accent-4">Read</v-btn>
+              <v-btn text color="deep-purple accent-4" :to="guide.link"
+                >Read</v-btn
+              >
             </v-card-actions>
           </v-card>
         </v-col>
@@ -58,27 +58,13 @@ export default {
     guides: [
       {
         id: 1,
-        title: "Beginner Need To Know - Dragon Raja",
-        genre: [{ text: "Beginer" }, { text: "tips" }],
-        icon: "img/icons/dragonraja-icon.jfif",
-        intro: ``,
-        trailer: ""
-      },
-      {
-        id: 2,
         title: "Class Overview - Dragon Raja",
-        genre: [{ text: "Beginer" }, { text: "tips" }],
+        genre: [{ text: "Beginner" }, { text: "Tips" }],
         icon: "img/icons/dragonraja-icon.jfif",
         intro: ``,
-        trailer: ""
-      },
-      {
-        id: 3,
-        title: "Beginner Need To Know - Dragon Raja",
-        genre: [{ text: "Beginer" }, { text: "tips" }],
-        icon: "img/icons/dragonraja-icon.jfif",
-        intro: ``,
-        trailer: ""
+        trailer: "",
+        bg: "img/classes/classes_bg.jpg",
+        link: "dragonraja-class-guide"
       }
     ]
   }),
