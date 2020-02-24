@@ -3,21 +3,21 @@ import VueRouter from "vue-router";
 import DragonRaja from "../views/DragonRaja.vue";
 import DragonRajaGuide from "../views/DragonRajaGuide.vue";
 import DragonRajaClassGuide from "../views/DragonRajaClassGuide.vue";
-import Member from "../views/Member.vue";
 import Community from "../views/Community.vue";
+import { firestorePlugin } from "vuefire";
+Vue.use(firestorePlugin);
 
 Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
     name: "home",
-    component: () => import(/* webpackChunkName: "about" */ "../views/Home.vue")
+    component: () => import("../views/Home.vue")
   },
   {
     path: "/about",
     name: "about",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue")
+    component: () => import("../views/About.vue")
   },
   {
     path: "/dragonraja",
@@ -25,9 +25,14 @@ const routes = [
     component: DragonRaja
   },
   {
-    path: "/member",
+    path: "/member/adjust",
     name: "member",
-    component: Member
+    component: () => import("../views/Memberadjust.vue")
+  },
+  {
+    path: "/member",
+    name: "memberadjust",
+    component: () => import("../views/Member.vue")
   },
   {
     path: "/dragonraja-guide",
@@ -48,7 +53,7 @@ const routes = [
 
 const router = new VueRouter({
   mode: "history",
-  base: process.env.BASE_URL,
+  base: "/raven/",
   routes
 });
 

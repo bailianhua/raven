@@ -1,27 +1,35 @@
 <template>
   <div class="party">
+    <v-app-bar dense flat dark>
+      <v-text-field
+        :append-icon-cb="() => {}"
+        placeholder="Search member..."
+        single-line
+        append-icon="mdi-account-search"
+        color="white"
+        hide-details
+        :bind="this.search"
+      />
+      <v-spacer></v-spacer>
+    </v-app-bar>
     <v-container fluid>
       <v-row dense>
         <v-col v-for="(party, i) in parties" :key="i">
           <v-card class="mx-auto" max-width="300">
-            <v-subheader>{{ party.party_name }}</v-subheader>
+            <v-toolbar dark dense>
+              <v-toolbar-title class="grey--text">{{
+                party.party_name
+              }}</v-toolbar-title></v-toolbar
+            >
             <v-list dense>
-              <draggable
-                :list="party.party_members"
-                group="member"
-                :component-data="partyListData()"
-              >
-                <v-list-item
-                  v-for="(member, i) in party.party_members"
-                  :key="i"
-                  link
-                >
-                  <v-list-item-icon>
-                    <v-icon>mdi-account</v-icon>
-                  </v-list-item-icon>
-                  <v-list-item-title v-text="member.name"></v-list-item-title>
-                </v-list-item>
-              </draggable>
+              <v-list-item v-for="(member, i) in party.party_members" :key="i">
+                <v-list-item-icon>
+                  <v-icon>mdi-account</v-icon>
+                </v-list-item-icon>
+                <v-list-item-title
+                  v-text="member.member_name"
+                ></v-list-item-title>
+              </v-list-item>
             </v-list>
           </v-card>
         </v-col>
@@ -31,15 +39,19 @@
 </template>
 
 <script>
-import draggable from "vuedraggable";
+import firebase from "firebase/app";
+import "firebase/firestore";
+
+// Get a Firestore instance
+export const db = firebase
+  .initializeApp({ projectId: "raven-12e4e" })
+  .firestore();
 
 export default {
-  components: {
-    draggable
-  },
+  components: {},
   name: "Party",
   data: () => ({
-    parties: [
+    parties_bak: [
       {
         party_name: "Evil team",
         party_type: "mollit",
@@ -196,7 +208,9 @@ export default {
           }
         ]
       }
-    ]
+    ],
+    parties: [],
+    search: ""
   }),
   methods: {
     partyListData() {
@@ -206,6 +220,9 @@ export default {
         }
       };
     }
+  },
+  firestore: {
+    parties: db.collection("party")
   }
 };
 </script>

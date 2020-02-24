@@ -2,7 +2,7 @@
   <div class="class-guide">
     <v-app-bar dense flat dark>
       <v-spacer></v-spacer>
-      <v-btn dark color="primary" href="dragonraja-guide">
+      <v-btn dark color="primary" to="/dragonraja-guide">
         <v-icon left dark>mdi-chevron-left</v-icon>Go back to guide collection
       </v-btn>
     </v-app-bar>
